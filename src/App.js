@@ -43,17 +43,19 @@ function App() {
        <ScrollToTop />
       <Provider>
         <div className="App"> 
-          {currentUser ? 
             <Routes>
               <Route path='/' element={<><HeaderWelcome/><Welcome/></>} />
-              <Route path='/signup/new' element={<Signup />}/>
-              <Route path='/signin' element={<Signin />}/>
-              <Route path='/home' element={<><Header user={currentUser}/><HomePage user={currentUser}/><Footer /></>}/>
-              <Route path='/account/edit-profile' element={<><Header user={currentUser}/><EditProfilePage user={currentUser}/><Footer /></>} />
-              <Route path='/account/general' element={<><Header user={currentUser}/><GeneralPage user={currentUser}/><Footer /></>} />
-              <Route path='/account/password' element={<><Header user={currentUser}/><PasswordPage user={currentUser}/><Footer /></>} />
-            </Routes> : <></>
-          }
+              {currentUser ? 
+                <>
+                  <Route path='/signup/new' element={<Signup />}/>
+                  <Route path='/signin' element={<Signin />}/>
+                  <Route path='/home' element={<><Header user={currentUser}/><HomePage user={currentUser}/><Footer /></>}/>
+                  <Route path='/account/edit-profile' element={<><Header user={currentUser}/><EditProfilePage user={currentUser}/><Footer /></>} />
+                  <Route path='/account/general' element={<><Header user={currentUser}/><GeneralPage user={currentUser}/><Footer /></>} />
+                  <Route path='/account/password' element={<><Header user={currentUser}/><PasswordPage user={currentUser}/><Footer /></>} />
+                </> : <></>
+              }
+            </Routes>
         </div>
       </Provider>
     </Router>
