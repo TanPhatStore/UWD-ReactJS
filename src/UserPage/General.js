@@ -10,13 +10,12 @@ import axios from 'axios';
 
 function GeneralPage() {
     const navigate = useNavigate()
-    const [handle] = useContext(Context)
+    const [handle, data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
     useEffect(() => {
-        handle.getCurrentUser()
-            .then(user => {setCurrentUser(user)})
+        setCurrentUser(data.currentUser)
     }, [])
 
     const treatmentRef = useRef()

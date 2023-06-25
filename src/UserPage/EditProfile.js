@@ -10,13 +10,12 @@ import defaultUser from '../default-user.jpg'
 function EditProfilePage() {
     const navigate = useNavigate()
     const [i , setI] = useState(0)
-    const [handle] = useContext(Context)
+    const [handle,  data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
     useEffect(() => {
-        handle.getCurrentUser()
-            .then(user => {setCurrentUser(user)})
+        setCurrentUser(data.currentUser)
     }, [])
 
     const treatmentRef = useRef()

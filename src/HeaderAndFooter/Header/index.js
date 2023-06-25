@@ -11,11 +11,10 @@ import defaultUser from '../../default-user.jpg'
 
 function Header() {
 
-    const [handle] = useContext(Context)
+    const [handle, data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
     useEffect(() => {
-        handle.getCurrentUser()
-            .then(user => {setCurrentUser(user)})
+        setCurrentUser(data.currentUser)
     }, [])
 
     const handleOverMenu = (str) => {
