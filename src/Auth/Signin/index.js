@@ -34,7 +34,10 @@ function Login() {
                     setTimeout(() => {setNotifi({status : 'success', message : 'Logged in successfully',  isAuth : true})}, 50);
                     setTimeout(() => {
                         setNotifi({status : 'none', message : ''})
-                        setTimeout(() => {navigate('/home')}, 500);
+                        setTimeout(() => {
+                            navigate('/home')
+                            window.location.reload()
+                        }, 500);
                     }, 1500)
                 } else {
                     setNotifi({status : 'none', message : ''})
