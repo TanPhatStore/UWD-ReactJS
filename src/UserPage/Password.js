@@ -34,7 +34,7 @@ function PasswordPage() {
                     setNotifi({status : 'none', message : ''})
                     setTimeout(() => {setNotifi({status : 'warning', message : 'New password and confirmation password must match'})}, 50);
                 } else {
-                    axios.put('http://localhost:8080/v1/user/update-password', {oldPassword : passold, newPassword : passnew}, {headers : {token : 'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+                    axios.put('https://uwd-node-js.vercel.app/v1/user/update-password', {oldPassword : passold, newPassword : passnew}, {headers : {token : 'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
                     .then(res => {
                         if (res.data.code == 200) {
                             document.querySelector('.txt-passnew').value = ''
@@ -60,7 +60,7 @@ function PasswordPage() {
     }
 
     const handleDeleteUser = () => {
-        axios.delete('http://localhost:8080/v1/user/delete-user', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+        axios.delete('https://uwd-node-js.vercel.app/v1/user/delete-user', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
             .then(res => {
                 if(res.data.code == 200) {
                     localStorage.removeItem('current-user')

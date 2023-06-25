@@ -12,7 +12,7 @@ function Provider({children}) {
                     navigate('/')
                 }, 0); 
             } else {
-                axios.get('http://localhost:8080/v1/auth/check-token?token='+ currentUser.token)
+                axios.get('https://uwd-node-js.vercel.app/v1/auth/check-token?token='+ currentUser.token)
                     .then (res => {
                         if (!res.data.message) {
                             navigate('/')
@@ -22,7 +22,7 @@ function Provider({children}) {
         },
         getCurrentUser : async () => {
             const currentUser = JSON.parse(localStorage.getItem('current-user'))
-            const res = await axios.get('http://localhost:8080/v1/user/current-user', {headers : {token : `Bearer ${currentUser.token}`}})
+            const res = await axios.get('https://uwd-node-js.vercel.app/v1/user/current-user', {headers : {token : `Bearer ${currentUser.token}`}})
             if (res.data.code == 200) {
                 return res.data.currentUser._doc
             } else {

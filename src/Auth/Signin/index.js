@@ -13,7 +13,7 @@ function Login() {
     const [notifi, setNotifi] = useState({status : 'none', message : '', isAuth : true})
 
     if (currentUser) {
-        axios.get('http://localhost:8080/v1/auth/check-token?token='+currentUser.token)
+        axios.get('https://uwd-node-js.vercel.app/v1/auth/check-token?token='+currentUser.token)
             .then(res => {
                 if (res.data.message) {
                     setTimeout(() => {navigate('/home')}, 3000)
@@ -23,7 +23,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8080/v1/auth/login', {
+        axios.post('https://uwd-node-js.vercel.app/v1/auth/login', {
             username : document.querySelector('#txtusername').value,
             password : document.querySelector('#txtpassword').value
         })

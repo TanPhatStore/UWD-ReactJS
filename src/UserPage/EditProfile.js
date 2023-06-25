@@ -37,7 +37,7 @@ function EditProfilePage() {
             const formData = new FormData();
             const file = imageUser.current.files[0]
             formData.append('image', file)
-            axios.post('http://localhost:8080/v1/user/upload-new-avatar', formData, {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+            axios.post('https://uwd-node-js.vercel.app/v1/user/upload-new-avatar', formData, {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
                 .then(res => {
                     if(res.data.code == 200) {
                         window.location.reload()
@@ -51,7 +51,7 @@ function EditProfilePage() {
 
     const handleDeleteAvatar = () => {
         if (currentUser.URL_Avatar != '') {
-            axios.delete('http://localhost:8080/v1/user/delete-avatar', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+            axios.delete('https://uwd-node-js.vercel.app/v1/user/delete-avatar', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
                 .then(res => {
                     if(res.data.code == 200) {
                         window.location.reload()
@@ -74,7 +74,7 @@ function EditProfilePage() {
             setTimeout(() => {setNotifi({status : 'warning', message : 'Please change information before saving changes'})}, 50);
         } else {
             if (name != '') {
-                axios.put('http://localhost:8080/v1/user/update-profile', {name : name, date  : date, location : location, bio : bio} ,{headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+                axios.put('https://uwd-node-js.vercel.app/v1/user/update-profile', {name : name, date  : date, location : location, bio : bio} ,{headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
                     .then(res => {
                         if(res.data.code == 200) {
                             window.location.reload()
@@ -93,7 +93,7 @@ function EditProfilePage() {
     }
     
     const handleDeleteUser = () => {
-        axios.delete('http://localhost:8080/v1/user/delete-user', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
+        axios.delete('https://uwd-node-js.vercel.app/v1/user/delete-user', {headers : {token :  'Bearer ' + JSON.parse(localStorage.getItem('current-user')).token}})
             .then(res => {
                 if(res.data.code == 200) {
                     localStorage.removeItem('current-user')
