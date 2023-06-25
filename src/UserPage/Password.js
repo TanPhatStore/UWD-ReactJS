@@ -8,15 +8,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import defaultUser from '../default-user.jpg'
 import axios from 'axios';
 
-function PasswordPage() {
+function PasswordPage({user}) {
     const navigate = useNavigate()
     const [handle, data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
+    useEffect(() => {
+        setCurrentUser(user)
+    },[])
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
-    useEffect(() => {
-        setCurrentUser(data.currentUser)
-    }, [])
 
     const treatmentRef = useRef()
     
@@ -82,7 +82,7 @@ function PasswordPage() {
             <div className="col-lg-8 userpage">
                 <div className='col-lg-12 slat-header'>
                     <div className='logo'>
-                        <img src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} width='100%'/>
+                        {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                     </div>
                     <div className='col-lg-7 title-and-description'>
                         <div className='title'> {currentUser ? currentUser.name : ''} / Password</div>

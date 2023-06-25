@@ -5,17 +5,15 @@ import './header.scss'
 import logoWhite from './logoWhite.png'
 import { useNavigate } from 'react-router-dom'
 import Notification from '../../Notification'
-import { useContext, useEffect, useState } from 'react'
-import { Context } from '../../UseContext/ThemeContext';
+import {useEffect, useState} from 'react'
 import defaultUser from '../../default-user.jpg'
 
-function Header() {
+function Header({user}) {
 
-    const [handle, data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
     useEffect(() => {
-        setCurrentUser(data.currentUser)
-    }, [])
+        setCurrentUser(user)
+    },[])
 
     const handleOverMenu = (str) => {
         const subMenu = document.querySelector(`.${str}`)
@@ -88,14 +86,12 @@ function Header() {
                 </div>
                 <div className='image-user' onMouseOver={handleOverUser} onMouseOut={handleOutUser}>
                     <div style={{height : '100%', display :'flex', alignItems : 'center', overflow : 'hidden', borderRadius : '50%', height : '75%'}}>
-                        <img style={{cursor: 'pointer'}} src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} 
-                            height='100%'
-                        />
+                        {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                     </div>
                     <div className='profile-area col-lg-12'>
                         <div className='image-area col-lg-12'>
                             <div className='image-user-profile'>
-                                <img src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} height='100%'/>
+                            {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                             </div>
                         </div>
                         <div className='col-lg-12 name'>

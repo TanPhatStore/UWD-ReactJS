@@ -7,19 +7,17 @@ import Notification from '../Notification'
 import { Link, useNavigate } from 'react-router-dom';
 import defaultUser from '../default-user.jpg'
 
-function EditProfilePage() {
+function EditProfilePage({user}) {
     const navigate = useNavigate()
     const [i , setI] = useState(0)
     const [handle,  data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
+    useEffect(() => {
+        setCurrentUser(user)
+    },[])
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
-    useEffect(() => {
-        setCurrentUser(data.currentUser)
-    }, [])
-
     const treatmentRef = useRef()
-
     const imageUser = useRef()
 
     useEffect(() => {
@@ -29,7 +27,7 @@ function EditProfilePage() {
             document.querySelector('.txt-bio').value = currentUser.bio
             document.querySelector('.txt-date').value = currentUser.dateOfBirth.split('T')[0]
         }
-    })
+    }, [currentUser])
 
     const handleClickSaveImage = () => {
         if (imageUser.current.files[0]) {
@@ -115,7 +113,7 @@ function EditProfilePage() {
             <div className="col-lg-8 userpage">
                 <div className='col-lg-12 slat-header'>
                     <div className='logo'>
-                        <img src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} width='100%'/>
+                        {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                     </div>
                     <div className='col-lg-7 title-and-description'>
                         <div className='title'> {currentUser ? currentUser.name : ''} / Edit Profile</div>
@@ -136,7 +134,7 @@ function EditProfilePage() {
                         <div className='col-lg-12' id='edit-profile' style={{minHeight : '350px'}}>
                             <div className='group' style={{display : 'flex'}}>
                                 <div className="logo">
-                                    <img src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} height='100%'/>
+                                    {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                                 </div>
                                 <div className="col-lg-7 action">
                                     <input ref={imageUser} type="file" className="image-user" accept=".jpg, .jpeg, .png"/>

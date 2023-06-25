@@ -8,22 +8,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import defaultUser from '../default-user.jpg'
 import axios from 'axios';
 
-function GeneralPage() {
+function GeneralPage({user}) {
     const navigate = useNavigate()
     const [handle, data] = useContext(Context)
     const [currentUser, setCurrentUser] = useState()
+    useEffect(() => {
+        setCurrentUser(user)
+    },[])
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
-    useEffect(() => {
-        setCurrentUser(data.currentUser)
-    }, [])
-
     const treatmentRef = useRef()
     
     useEffect(() => {
         document.querySelector('.txt-username').value = currentUser ? currentUser.username : ''
         document.querySelector('.txt-email').value = currentUser ? currentUser.email : ''
-    })
+    },[currentUser]) 
 
     const handleChange = () => {
         const value = document.querySelector('.txt-email').value
@@ -69,7 +68,7 @@ function GeneralPage() {
             <div className="col-lg-8 userpage">
                 <div className='col-lg-12 slat-header'>
                     <div className='logo'>
-                        <img src={currentUser ? (currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser) : ''} width='100%'/>
+                        {currentUser ? <img src={currentUser.URL_Avatar != '' ? currentUser.URL_Avatar  : defaultUser} height='100%'/> : <></>}
                     </div>
                     <div className='col-lg-7 title-and-description'>
                         <div className='title'> {currentUser ? currentUser.name : ''} / General</div>
@@ -94,7 +93,7 @@ function GeneralPage() {
                             </div>
                             <div className='group'>
                                 <label>Email</label>
-                                <input type="email" className="form-control txt-email txt" />
+                                <input type="text" className="form-control txt-email txt" />
                             </div>
                             <div className='group' style={{display : 'flex', justifyContent : 'end'}}>
                                 <button className='btn-save' onClick={handleChange}>Save Change</button>

@@ -11,7 +11,9 @@ import PasswordPage from './UserPage/Password';
 import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import './App.css';
 import Provider from './UseContext/Provider';
-import { useEffect } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Context } from './UseContext/ThemeContext';
+import axios from 'axios';
 
 function App() {
 
@@ -22,20 +24,36 @@ function App() {
     }, [pathname]);
   };
 
+  const [currentUser, setCurrentUser] = useState()
+  const user = JSON.parse(localStorage.getItem('current-user'))
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const res = await axios.get('https://uwd-node-js.vercel.app/v1/user/current-user', { headers: { token: `Bearer ${user.token}` } });
+        if (res.data.code === 200) {
+          setCurrentUser(res.data.currentUser._doc);
+        }
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Router>
        <ScrollToTop />
       <Provider>
-        <div className="App">
-          <Routes>
-            <Route path='/' element={<><HeaderWelcome/><Welcome/></>} />
-            <Route path='/signup/new' element={<Signup />}/>
-            <Route path='/signin' element={<Signin />}/>
-            <Route path='/home' element={<><Header/><HomePage/><Footer /></>}/>\
-            <Route path='/account/edit-profile' element={<><Header/><EditProfilePage/><Footer /></>} />
-            <Route path='/account/general' element={<><Header/><GeneralPage/><Footer /></>} />
-            <Route path='/account/password' element={<><Header/><PasswordPage/><Footer /></>} />
-          </Routes>
+        <div className="App"> 
+          {currentUser ? 
+            <Routes>
+              <Route path='/' element={<><HeaderWelcome/><Welcome/></>} />
+              <Route path='/signup/new' element={<Signup />}/>
+              <Route path='/signin' element={<Signin />}/>
+              <Route path='/home' element={<><Header user={currentUser}/><HomePage user={currentUser}/><Footer /></>}/>
+              <Route path='/account/edit-profile' element={<><Header user={currentUser}/><EditProfilePage user={currentUser}/><Footer /></>} />
+              <Route path='/account/general' element={<><Header user={currentUser}/><GeneralPage user={currentUser}/><Footer /></>} />
+              <Route path='/account/password' element={<><Header user={currentUser}/><PasswordPage user={currentUser}/><Footer /></>} />
+            </Routes> : <></>
+          }
         </div>
       </Provider>
     </Router>

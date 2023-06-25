@@ -5,7 +5,7 @@ import Prologue from './Prologue';
 import { Context } from "../UseContext/ThemeContext";
 import { useContext } from 'react';
 
-function HomePage() {
+function HomePage({user}) {
 
     const [handle] = useContext(Context)
     handle.checkLogged()

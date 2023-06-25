@@ -5,22 +5,9 @@ import { useEffect, useState } from "react";
 
 function Provider({children}) {
     const navigate = useNavigate()
-    const [currentUser,  setCurrentUser] = useState()
     const user = JSON.parse(localStorage.getItem('current-user'))
-    const loadCurrentUser = async () => {
-        if (user) {
-            await axios.get('https://uwd-node-js.vercel.app/v1/user/current-user', {headers : {token : `Bearer ${user.token}`}})
-            .then(res => {
-                if (res.data.code == 200) {
-                    setCurrentUser(res.data.currentUser._doc)
-                }
-            })
-        }
-    }
-    loadCurrentUser()
-
     const data = {
-        currentUser
+        currentUser : ''
     }
     const handle = {
         checkLogged : () =>{
@@ -41,7 +28,7 @@ function Provider({children}) {
     }
 
     return ( 
-        <Context.Provider value={[handle, data]}>
+        <Context.Provider value={[handle , data]}>
             {children}
         </Context.Provider>
      );
