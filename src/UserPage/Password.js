@@ -14,7 +14,7 @@ function PasswordPage({user}) {
     const [currentUser, setCurrentUser] = useState()
     useEffect(() => {
         setCurrentUser(user)
-    },[])
+    },[user])
     const [notifi, setNotifi] = useState({status : 'none', message : ''})
     handle.checkLogged()
 

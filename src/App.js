@@ -29,14 +29,26 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const res = await axios.get('https://uwd-node-js.vercel.app/v1/user/current-user', { headers: { token: `Bearer ${user.token}` } });
-        if (res.data.code === 200) {
-          setCurrentUser(res.data.currentUser._doc);
-        }
+        await axios.get('https://uwd-node-js.vercel.app/v1/user/current-user', { headers: { token: `Bearer ${user.token}` } })
+          .then (res => {
+            if (res.data.code === 200) {
+              setCurrentUser(res.data.currentUser._doc);
+            }
+          })
       }
     };
     fetchData();
   }, []);
+
+  const CommonLayout = ({ children }) => {
+    return (
+      <>
+        <Header user={currentUser}/>
+        {children} 
+        <Footer />
+      </>
+    );
+  };
 
   return (
     <Router>
@@ -45,16 +57,12 @@ function App() {
         <div className="App"> 
             <Routes>
               <Route path='/' element={<><HeaderWelcome/><Welcome/></>} />
-              {currentUser ? 
-                <>
-                  <Route path='/signup/new' element={<Signup />}/>
-                  <Route path='/signin' element={<Signin />}/>
-                  <Route path='/home' element={<><Header user={currentUser}/><HomePage user={currentUser}/><Footer /></>}/>
-                  <Route path='/account/edit-profile' element={<><Header user={currentUser}/><EditProfilePage user={currentUser}/><Footer /></>} />
-                  <Route path='/account/general' element={<><Header user={currentUser}/><GeneralPage user={currentUser}/><Footer /></>} />
-                  <Route path='/account/password' element={<><Header user={currentUser}/><PasswordPage user={currentUser}/><Footer /></>} />
-                </> : <></>
-              }
+              <Route path='/signup/new' element={<Signup />}/>
+              <Route path='/signin' element={<Signin />}/>
+              <Route path='/home' element={<CommonLayout children={<HomePage user={currentUser}/>} />}/>
+              <Route path='/account/edit-profile' element={<CommonLayout children={<EditProfilePage user={currentUser}/>} />} />
+              <Route path='/account/general' element={<CommonLayout children={<GeneralPage user={currentUser}/>} />} />
+              <Route path='/account/password' element={<CommonLayout children={<PasswordPage user={currentUser}/>} />} />
             </Routes>
         </div>
       </Provider>

@@ -9,11 +9,10 @@ import {useEffect, useState} from 'react'
 import defaultUser from '../../default-user.jpg'
 
 function Header({user}) {
-
     const [currentUser, setCurrentUser] = useState()
     useEffect(() => {
         setCurrentUser(user)
-    },[])
+    },[user])
 
     const handleOverMenu = (str) => {
         const subMenu = document.querySelector(`.${str}`)
