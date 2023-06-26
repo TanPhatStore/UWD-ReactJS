@@ -9,17 +9,7 @@ import { useState } from 'react';
 function Login() {
 
     const navigate = useNavigate()
-    const currentUser = JSON.parse(localStorage.getItem('current-user'))
     const [notifi, setNotifi] = useState({status : 'none', message : '', isAuth : true})
-
-    if (currentUser) {
-        axios.get('https://uwd-node-js.vercel.app/v1/auth/check-token?token='+currentUser.token)
-            .then(res => {
-                if (res.data.message) {
-                    setTimeout(() => {navigate('/home')}, 3000)
-                }
-            })
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
